@@ -43,10 +43,22 @@ public class Emprestimo {
     }
 
     public void fazerEmprestimo (Pessoa pessoa, Livro livro){
-        if (pessoa.getLivrosEmprestados() <=2 && pessoa.isDevedor() == false){
+        if (pessoa.getLivrosEmprestados() <=2 && pessoa.isDevedor() == false && pessoa.isDevedor() == false){
             livro.setEmprestado(true);
             pessoa.setLivrosEmprestados(pessoa.getLivrosEmprestados()+1);
-
+        } else {
+            System.out.println("Você já emprestou o máximo de livros possíveis por vez. Devolva algum para fazer novo empréstimo.");
         }
     }
+
+    public void devolverLivro (Pessoa pessoa, Livro livro){
+        if (livro.getEmprestado() == true){
+            livro.setEmprestado(false);
+            pessoa.setLivrosEmprestados((pessoa.getLivrosEmprestados())-1);
+            pessoa.setDevedor(false);
+        } else {
+            System.out.println("Livro já está no nosso acervo.");
+        }
+    }
+
 }
