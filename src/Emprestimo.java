@@ -1,53 +1,53 @@
+import java.time.LocalDate;
+
 public class Emprestimo {
-    private int codigo;
-    private String dataEmprestimo;
-    private Pessoa pessoa;
-    private Livro livro;
+    private LocalDate dataEmprestimo;
+    private String pessoa;
+    private String livro;
+    private boolean emprestado;
 
-    public Emprestimo(String dataEmprestimo, Pessoa pessoa, Livro livro) {
-        this.dataEmprestimo = dataEmprestimo;
-        this.pessoa = pessoa;
-        this.livro = livro;
+    public Emprestimo() {
+        this.emprestado = false;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getDataEmprestimo() {
+    public LocalDate getDataEmprestimo() {
         return dataEmprestimo;
     }
 
     public void setDataEmprestimo(String dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
+        this.dataEmprestimo = LocalDate.parse(dataEmprestimo);
     }
 
-    public Pessoa getPessoa() {
+    public String getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
-    public Livro getLivro() {
+    public String getLivro() {
         return livro;
     }
 
-    public void setLivro(Livro livro) {
-        this.livro = livro;
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public boolean isEmprestado() {
+        return emprestado;
+    }
+
+    public void setEmprestado(boolean emprestado) {
+        this.emprestado = emprestado;
     }
 
     public void fazerEmprestimo (Pessoa pessoa, Livro livro){
         if (pessoa.getLivrosEmprestados() <=2 && pessoa.isDevedor() == false && pessoa.isDevedor() == false){
             livro.setEmprestado(true);
             pessoa.setLivrosEmprestados(pessoa.getLivrosEmprestados()+1);
+            LocalDate dataEmprestimo = LocalDate.now();
+            this.dataEmprestimo = dataEmprestimo;
+            this.pessoa = pessoa.getNome();
+            this.livro = livro.getTitulo();
         } else {
-            System.out.println("Você já emprestou o máximo de livros possíveis por vez. Devolva algum para fazer novo empréstimo.");
+            System.out.println("Não é possível realizar o empréstimo.");
         }
     }
 
@@ -59,6 +59,11 @@ public class Emprestimo {
         } else {
             System.out.println("Livro já está no nosso acervo.");
         }
+    }
+
+    public void mostrarEmprestimo(){
+        System.out.printf("O livro %s foi emprestado por %s", getLivro(), getPessoa());
+        System.out.println(" na data: " + dataEmprestimo);
     }
 
 }
